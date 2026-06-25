@@ -1,11 +1,11 @@
 package com.guilherme.hotel.Dao;
 
-import com.guilherme.hotel.Model.Rooms;
+import com.guilherme.hotel.Model.Room;
 
 import java.util.List;
 
 
 public interface RoomDAO {
-    void save(Rooms room);
-    List<Rooms> list();
+    void save(Room room);
+    List<Room> list();
 }

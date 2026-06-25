@@ -1,6 +1,6 @@
 package com.guilherme.hotel.Dao;
 
-import com.guilherme.hotel.Model.Rooms;
+import com.guilherme.hotel.Model.Room;
 import com.guilherme.hotel.Utils.DBConnection;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RoomDAOImp implements RoomDAO {
     @Override
-    public void save(Rooms rooms){
+    public void save(Room room){
         String sql = "INSERT INTO rooms "
                 +"(number, type, daily_rate, status) VALUES"
                 +"(?, ?, ?, ?)";
@@ -17,10 +17,10 @@ public class RoomDAOImp implements RoomDAO {
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setInt(1, rooms.getNumber());
-            stat.setString(2, rooms.getType());
-            stat.setString(3, rooms.getStatus());
-            stat.setDouble(4, rooms.getDaily_rate());
+            stat.setInt(1, room.getNumber());
+            stat.setString(2, room.getType());
+            stat.setString(3, room.getStatus());
+            stat.setDouble(4, room.getDaily_rate());
             stat.executeUpdate();
         }catch(SQLException ex){
             throw new RuntimeException(ex);
@@ -28,8 +28,8 @@ public class RoomDAOImp implements RoomDAO {
     }
 
     @Override
-    public List<Rooms> list(){
-        List<Rooms> list = new ArrayList<>();
+    public List<Room> list(){
+        List<Room> list = new ArrayList<>();
         String sql = "SELECT id, number, type, status, daily_rate"
                 + "FROM rooms ORDER BY number";
 
@@ -39,7 +39,7 @@ public class RoomDAOImp implements RoomDAO {
             ResultSet rs = stat.executeQuery(sql);
 
             while (rs.next()){
-                Rooms r = new Rooms();
+                Room r = new Room();
                 r.setId(rs.getLong("id"));
                 r.setNumber(rs.getInt("number"));
                 r.setType(rs.getString("type"));
@@ -51,6 +51,23 @@ public class RoomDAOImp implements RoomDAO {
             throw new RuntimeException(ex);
         }
         return list;
+    }
+
+    @Override
+    public Room searchById (Long id){
+        String sql = "SELECT id, number, type, daily_rate, status "
+                +"FROM rooms"
+                +"WHERE id = ?";
+
+        try{
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setLong(1, id);
+            ResultSet rs = stat.executeQuery(sql);
+
+
+
+        }
     }
 
 }
