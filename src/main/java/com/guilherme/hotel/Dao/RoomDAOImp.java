@@ -53,21 +53,4 @@ public class RoomDAOImp implements RoomDAO {
         return list;
     }
 
-    @Override
-    public Room searchById (Long id){
-        String sql = "SELECT id, number, type, daily_rate, status "
-                +"FROM rooms"
-                +"WHERE id = ?";
-
-        try{
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setLong(1, id);
-            ResultSet rs = stat.executeQuery(sql);
-
-
-
-        }
-    }
-
 }

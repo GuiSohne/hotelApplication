@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guilherme.hotel.Controller.FrmRoomCrontroller">
    <children>
       <Pane prefHeight="400.0" prefWidth="154.0" style="-fx-background-color: #1F2937;">
          <children>
@@ -61,7 +61,10 @@
             <Button fx:id="btnEdit" layoutX="75.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Editar" />
             <Button fx:id="btnListar" layoutX="221.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Listar" />
             <Button fx:id="btnListartodos" layoutX="131.0" layoutY="129.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Listar todos" />
-            <ScrollPane fx:id="scrollPaneQuarto" layoutX="47.0" layoutY="181.0" prefHeight="137.0" prefWidth="265.0" />
+            <ScrollPane fx:id="scrollPaneQuarto" layoutX="47.0" layoutY="181.0" prefHeight="137.0" prefWidth="265.0">
+               <content>
+                  <Label fx:id="lblQuartos" prefHeight="26.0" prefWidth="58.0" text="Quartos" />
+               </content></ScrollPane>
          </children>
       </Pane>
       <Label layoutX="259.0" layoutY="5.0" text="Busque o quarto desejado">

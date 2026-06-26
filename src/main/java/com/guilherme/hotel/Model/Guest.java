@@ -6,6 +6,7 @@ public class Guest {
     private String cpf;
     private String phone;
     private String email;
+    private String password;
 
     public Guest() {}
 
@@ -15,6 +16,7 @@ public class Guest {
         this.cpf = cpf;
         this.phone = phone;
         this.email = email;
+        this.password = password;
     }
 
     public long getId() {
@@ -55,5 +57,13 @@ public class Guest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
