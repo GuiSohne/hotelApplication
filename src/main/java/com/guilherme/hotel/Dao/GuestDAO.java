@@ -5,15 +5,15 @@ import com.guilherme.hotel.Model.Guest;
 import java.util.List;
 
 public interface GuestDAO {
-    void save(Guest guest);
+    void saveGuest(Guest guest);
 
-    List<Guest> findAll();
+    List<Guest> findAllGuest();
 
-    Guest searchByCPF(String cpf);
+    Guest searchByCPFGuest(String cpf);
 
-    void delete(long id);
+    void deleteGuest(long id);
 
-    void update(Guest guest);
+    void updateGuest(Guest guest);
 
 
 }

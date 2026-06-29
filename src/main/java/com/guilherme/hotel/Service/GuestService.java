@@ -25,28 +25,28 @@ public class GuestService {
         if(guest.getPassword() == null || guest.getPassword().isBlank()){
             throw new RuntimeException("Password is required.");
         }
-        dao.save(guest);
+        dao.saveGuest(guest);
     }
 
     public List<Guest> findAll(){
-        return dao.findAll();
+        return dao.findAllGuest();
     }
 
     public Guest searchByCPF(String cpf){
         if(cpf == null || cpf.isBlank()){
             throw new RuntimeException("To search, you need a CPF.");
         }
-        return dao.searchByCPF(cpf);
+        return dao.searchByCPFGuest(cpf);
     }
 
     public void update(Guest guest){
-        dao.update(guest);
+        dao.updateGuest(guest);
     }
 
     public void delete(long id){
         if(id <= 0 ){
             throw new RuntimeException("This id is null");
         }
-        dao.delete(id);
+        dao.deleteGuest(id);
     }
 }

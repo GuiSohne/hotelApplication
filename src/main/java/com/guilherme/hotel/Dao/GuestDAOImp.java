@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GuestDAOImp implements GuestDAO {
     @Override
-    public void save(Guest guest) {
+    public void saveGuest(Guest guest) {
         String sql = "INSERT INTO guest "
                 + "(name, cpf, phone, email, password) "
                 + "VALUES (?, ?, ?, ?, ?)";
@@ -30,7 +30,7 @@ public class GuestDAOImp implements GuestDAO {
     }
 
     @Override
-    public List<Guest> findAll() {
+    public List<Guest> findAllGuest() {
         List<Guest> list = new ArrayList<>();
         String sql = "SELECT id, name, cpf, email, phone "
                 + "FROM guest ORDER BY name";
@@ -55,7 +55,7 @@ public class GuestDAOImp implements GuestDAO {
 
 
     @Override
-    public Guest searchByCPF(String cpf) {
+    public Guest searchByCPFGuest(String cpf) {
         String sql = "SELECT id, name, cpf, email, phone "
                 + "FROM guest WHERE cpf = ?";
 
@@ -89,7 +89,7 @@ public class GuestDAOImp implements GuestDAO {
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteGuest(long id) {
         String sql = "DELETE FROM guest WHERE id = ?";
 
         try {
@@ -112,7 +112,7 @@ public class GuestDAOImp implements GuestDAO {
     }
 
     @Override
-    public void update(Guest guest) {
+    public void updateGuest(Guest guest) {
         String sql = "UPDATE guest "
                 + "SET name = ?, cpf = ?, phone = ?, email = ?, password = ? "
                 + "WHERE id = ?";

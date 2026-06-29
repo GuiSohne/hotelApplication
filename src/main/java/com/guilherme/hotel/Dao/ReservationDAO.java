@@ -5,13 +5,13 @@ import com.guilherme.hotel.Model.Reservation;
 import java.util.List;
 
 public interface ReservationDAO {
-    void save(Reservation reservation);
+    void saveReservation(Reservation reservation);
 
-    List<Reservation> findAll();
+    List<Reservation> findAllReservation();
 
-    Reservation SearchById(Long id);
+    Reservation SearchByIdReservation(Long id);
 
-    void delete(Long id);
+    void deleteReservation(Long id);
 
-    void update(Reservation reservation);
+    void updateReservation(Reservation reservation);
 }
