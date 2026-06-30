@@ -10,7 +10,7 @@ public class Main extends Application{
     public void start(Stage stage) throws Exception{
         Scene scene = new Scene(FXMLLoader
                 .load(getClass()
-                        .getResource("/views/frmRooms.fxml")));
+                        .getResource("/views/frmGuests.fxml")));
         stage.setTitle("Room reservation");
         stage.setScene(scene);
         stage.show();

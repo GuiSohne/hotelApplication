@@ -6,6 +6,14 @@ import java.util.List;
 
 
 public interface RoomDAO {
-    void save(Room room);
-    List<Room> list();
+    void saveRoom(Room room);
+
+    List<Room> listRoom();
+
+    Room searchById(Long id);
+
+    void deleteRoom(Long id);
+
+    void updateRoom(Room room);
+
 }

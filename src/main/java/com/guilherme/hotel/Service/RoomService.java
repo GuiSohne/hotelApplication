@@ -2,7 +2,6 @@ package com.guilherme.hotel.Service;
 
 import com.guilherme.hotel.Dao.RoomDAO;
 import com.guilherme.hotel.Dao.RoomDAOImp;
-import com.guilherme.hotel.Model.Reservation;
 import com.guilherme.hotel.Model.Room;
 
 import java.util.List;
@@ -10,20 +9,19 @@ import java.util.List;
 public class RoomService {
     private RoomDAO dao = new RoomDAOImp();
 
-    public void save(Reservation reservation){
-        //nome  e usuarios vazios
-        if(reservation.getGuestid() == 0 || reservation.getRoomid() == 0){
-            throw new IllegalArgumentException("AAAAAAAAAAAA");
+    public void save(Room room){
+        //nome quarto colocado
+        if(room.getNumber() == 0){
+            throw new IllegalArgumentException("name preenchido");
         }
-
-        if(reservation.getCheckin() == null){
-
+        //preço
+        if(room.getDaily_rate() <= 0){
+            throw new IllegalArgumentException("preco preenchido");
         }
-
-        dao.save(reservation);
+        dao.saveRoom(room);
     }
 
     public List<Room> list(){
-        return dao.list();
+        return dao.listRoom();
     }
 }

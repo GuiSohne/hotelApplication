@@ -32,7 +32,7 @@ public class GuestDAOImp implements GuestDAO {
     @Override
     public List<Guest> findAllGuest() {
         List<Guest> list = new ArrayList<>();
-        String sql = "SELECT id, name, cpf, email, phone "
+        String sql = "SELECT id, name, cpf, email, phone, password "
                 + "FROM guest ORDER BY name";
         try {
             Connection conn = DBConnection.getConnection();
@@ -45,6 +45,7 @@ public class GuestDAOImp implements GuestDAO {
                 g.setCpf(rs.getString("cpf"));
                 g.setEmail(rs.getString("email"));
                 g.setPhone(rs.getString("phone"));
+                g.setPassword(rs.getString("password"));
                 list.add(g);
             }
         } catch (SQLException ex) {
@@ -56,7 +57,7 @@ public class GuestDAOImp implements GuestDAO {
 
     @Override
     public Guest searchByCPFGuest(String cpf) {
-        String sql = "SELECT id, name, cpf, email, phone "
+        String sql = "SELECT id, name, cpf, email, phone, password "
                 + "FROM guest WHERE cpf = ?";
 
         try {
@@ -74,6 +75,7 @@ public class GuestDAOImp implements GuestDAO {
                 g.setCpf(rs.getString("cpf"));
                 g.setEmail(rs.getString("email"));
                 g.setPhone(rs.getString("phone"));
+                g.setPassword(rs.getString("password"));
 
                 return g;
             }

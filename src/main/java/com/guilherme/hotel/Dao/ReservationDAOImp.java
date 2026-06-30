@@ -23,6 +23,8 @@ public class ReservationDAOImp implements ReservationDAO{
             stat.setDate(3, Date.valueOf(reservation.getCheckin()));
             stat.setDate(4, Date.valueOf(reservation.getCheckout()));
             stat.setBigDecimal(5, reservation.getTotalamount());
+
+            stat.executeUpdate();
         } catch (SQLException ex){
             throw new RuntimeException(ex);
         }
@@ -45,6 +47,8 @@ public class ReservationDAOImp implements ReservationDAO{
                 r.setCheckin(rs.getDate("checkin").toLocalDate());
                 r.setCheckout(rs.getDate("checkout").toLocalDate());
                 r.setTotalamount(rs.getBigDecimal("totalamount"));
+
+                list.add(r);
             }
         }catch (SQLException ex){
             throw new RuntimeException(ex);
@@ -55,13 +59,13 @@ public class ReservationDAOImp implements ReservationDAO{
     @Override
     public Reservation SearchByIdReservation(Long id) {
         String sql = "SELECT id, guest_id, room_id, check_in, check_out, total_amount "
-                + "FROM guest WHERE id = ?";
+                + "FROM reservations WHERE id = ?";
 
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
 
-            stat.setString(1, id.toString());
+            stat.setLong(1, id);
 
             ResultSet rs = stat.executeQuery();
 
@@ -79,8 +83,8 @@ public class ReservationDAOImp implements ReservationDAO{
 
             throw new RuntimeException(
                     "No Reservations found with the ID: " + id
-            )
-                    ;
+            );
+
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
@@ -89,7 +93,7 @@ public class ReservationDAOImp implements ReservationDAO{
 
     @Override
     public void deleteReservation(Long id) {
-        String sql = "DELETE FROM guest WHERE id = ?";
+        String sql = "DELETE FROM reservations WHERE id = ?";
 
         try {
             Connection conn = DBConnection.getConnection();
@@ -112,7 +116,7 @@ public class ReservationDAOImp implements ReservationDAO{
 
     @Override
     public void updateReservation(Reservation reservation) {
-        String sql = "UPDATE guest "
+        String sql = "UPDATE reservations "
                 + "SET  guestid= ?, roomid = ?, checkin = ?, checkout = ?, totalamount = ? "
                 + "WHERE id = ?";
 
