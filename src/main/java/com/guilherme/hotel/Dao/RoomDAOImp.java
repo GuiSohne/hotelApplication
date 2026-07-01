@@ -106,8 +106,12 @@ public class RoomDAOImp implements RoomDAO {
 
     @Override
     public void updateRoom(Room room){
+
+        System.out.println("ID recebido: " + room.getId());
+        System.out.println("Status recebido: " + room.getStatus());
+
         String sql = "UPDATE rooms "
-                +"SET number = ?, type = ?, daily_rate = ?, status = ?"
+                +"SET number = ?, type = ?, daily_rate = ?, status = ? "
                 +"WHERE id = ?";
 
         try{
@@ -122,9 +126,8 @@ public class RoomDAOImp implements RoomDAO {
 
             int rows = stat.executeUpdate();
 
-            if(rows == 0){
-                throw new RuntimeException("No room found with the id: "+ room.getId());
-            }
+            System.out.println("Linhas afetadas: " + rows);
+
         }catch(SQLException ex){
             throw new RuntimeException(ex);
         }

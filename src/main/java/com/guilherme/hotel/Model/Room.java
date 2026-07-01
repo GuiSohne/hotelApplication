@@ -7,6 +7,10 @@ public class Room {
     private Double daily_rate;
     private String status;
 
+    @Override
+    public String toString() {
+        return "Quarto " + number;
+    }
 
     public Room(){}
 

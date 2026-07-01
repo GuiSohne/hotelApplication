@@ -6,16 +6,26 @@ import java.time.LocalDate;
 public class Reservation {
     private long id;
     private int guestid;
-    private int roomid;
+    private long roomid;
     private LocalDate checkin;
     private LocalDate checkout;
     private BigDecimal totalamount;
 
+    @Override
+    public String toString() {
+        return "Reserva #" + id +
+                " | Hóspede: " + guestid +
+                " | Quarto: " + roomid +
+                " | Check-in: " + checkin +
+                " | Check-out: " + checkout;
+    }
     public Reservation(){}
 
     public long getId() {
         return id;
     }
+
+
 
     public void setId(long id) {
         this.id = id;
@@ -29,11 +39,11 @@ public class Reservation {
         this.guestid = guestid;
     }
 
-    public int getRoomid() {
+    public long getRoomid() {
         return roomid;
     }
 
-    public void setRoomid(int roomid) {
+    public void setRoomid(long roomid) {
         this.roomid = roomid;
     }
 

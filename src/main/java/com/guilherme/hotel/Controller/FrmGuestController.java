@@ -141,32 +141,53 @@ public class FrmGuestController {
     }
 
     private void mostrarMensagem(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        Alert alert =
+                new Alert(Alert.AlertType.INFORMATION);
+
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
     }
 
     private void mostrarErro(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        Alert alert =
+                new Alert(Alert.AlertType.ERROR);
+
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
+    // ==========================
+    // NAVEGAÇÃO ENTRE TELAS
+    // ==========================
+
     @FXML
-    private void abrirDashboard(ActionEvent event) {
-        try {
-            abrirDashboard();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+    private void abrirDashboard(ActionEvent event) throws IOException {
+        abrirTela("/views/frmDashboard.fxml");
     }
 
-    private void abrirDashboard() throws IOException {
+    @FXML
+    private void abrirGuest(ActionEvent event) throws IOException {
+        abrirTela("/views/frmGuests.fxml");
+    }
+
+    @FXML
+    private void abrirReservation(ActionEvent event) throws IOException {
+        abrirTela("/views/frmReservation.fxml");
+    }
+
+    @FXML
+    private void abrirRoom(ActionEvent event) throws IOException {
+        abrirTela("/views/frmRooms.fxml");
+    }
+
+    private void abrirTela(String caminho) throws IOException {
 
         FXMLLoader loader =
-                new FXMLLoader(getClass()
-                        .getResource("/views/frmDashboard.fxml"));
+                new FXMLLoader(getClass().getResource(caminho));
 
         Scene scene = new Scene(loader.load());
 
@@ -178,26 +199,26 @@ public class FrmGuestController {
     }
 
     @FXML
-    private void abrirGuest(ActionEvent event) {
+    private void logout(ActionEvent event) {
+
         try {
-            abrirDashboard();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+
+            FXMLLoader loader =
+                    new FXMLLoader(getClass()
+                            .getResource("/views/frmLogin.fxml"));
+
+            Scene scene = new Scene(loader.load());
+
+            Stage stage =
+                    (Stage) ((Button) event.getSource())
+                            .getScene()
+                            .getWindow();
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-
-    private void abrirGuest() throws IOException {
-
-        FXMLLoader loader =
-                new FXMLLoader(getClass()
-                        .getResource("/views/frmGuests.fxml"));
-
-        Scene scene = new Scene(loader.load());
-
-        Stage stage =
-                (Stage) txtFieldCPF.getScene().getWindow();
-
-        stage.setScene(scene);
-        stage.show();
     }
 }

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -15,15 +16,26 @@ import java.io.IOException;
 
 public class FrmDashboardController {
 
-    @FXML private Label lblUsuario;
-    @FXML private Label lblReserva;
+    @FXML
+    private Label lblUsuario;
 
-    @FXML private Label lblQuartoOcupado;
-    @FXML private Label lblQuartoLivre;
+    @FXML
+    private Label lblReserva;
 
-    @FXML private Label lblQuartoSimples;
-    @FXML private Label lblQuartoDuplo;
-    @FXML private Label lblQuartoLuxo;
+    @FXML
+    private Label lblQuartoOcupado;
+
+    @FXML
+    private Label lblQuartoLivre;
+
+    @FXML
+    private Label lblQuartoSimples;
+
+    @FXML
+    private Label lblQuartoDuplo;
+
+    @FXML
+    private Label lblQuartoLuxo;
 
     @FXML
     public void initialize() {
@@ -51,25 +63,25 @@ public class FrmDashboardController {
         int duplo = 0;
         int luxo = 0;
 
-        for(Room room : roomDAO.listRoom()) {
+        for (Room room : roomDAO.listRoom()) {
 
-            if(room.getStatus().equalsIgnoreCase("Occupied")) {
+            if (room.getStatus().equalsIgnoreCase("Occupied")) {
                 ocupados++;
             }
 
-            if(room.getStatus().equalsIgnoreCase("Available")) {
+            if (room.getStatus().equalsIgnoreCase("Available")) {
                 livres++;
             }
 
-            if(room.getType().equalsIgnoreCase("Single")) {
+            if (room.getType().equalsIgnoreCase("Single")) {
                 simples++;
             }
 
-            if(room.getType().equalsIgnoreCase("Double")) {
+            if (room.getType().equalsIgnoreCase("Double")) {
                 duplo++;
             }
 
-            if(room.getType().equalsIgnoreCase("Luxury")) {
+            if (room.getType().equalsIgnoreCase("Luxury")) {
                 luxo++;
             }
         }
@@ -82,5 +94,65 @@ public class FrmDashboardController {
         lblQuartoLuxo.setText(String.valueOf(luxo));
     }
 
+    // ==========================
+    // NAVEGAÇÃO ENTRE TELAS
+    // ==========================
 
+    @FXML
+    private void abrirDashboard(ActionEvent event) throws IOException {
+        abrirTela("/views/frmDashboard.fxml");
+    }
+
+    @FXML
+    private void abrirGuest(ActionEvent event) throws IOException {
+        abrirTela("/views/frmGuests.fxml");
+    }
+
+    @FXML
+    private void abrirReservation(ActionEvent event) throws IOException {
+        abrirTela("/views/frmReservation.fxml");
+    }
+
+    @FXML
+    private void abrirRoom(ActionEvent event) throws IOException {
+        abrirTela("/views/frmRooms.fxml");
+    }
+
+    private void abrirTela(String caminho) throws IOException {
+
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(caminho));
+
+        Scene scene = new Scene(loader.load());
+
+        Stage stage =
+                (Stage) lblUsuario.getScene().getWindow();
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader =
+                    new FXMLLoader(getClass()
+                            .getResource("/views/frmLogin.fxml"));
+
+            Scene scene = new Scene(loader.load());
+
+            Stage stage =
+                    (Stage) ((Button) event.getSource())
+                            .getScene()
+                            .getWindow();
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

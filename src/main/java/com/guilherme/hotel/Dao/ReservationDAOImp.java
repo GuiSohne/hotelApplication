@@ -19,7 +19,7 @@ public class ReservationDAOImp implements ReservationDAO{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setInt(1, reservation.getGuestid());
-            stat.setInt(2, reservation.getRoomid());
+            stat.setLong(2, reservation.getRoomid());
             stat.setDate(3, Date.valueOf(reservation.getCheckin()));
             stat.setDate(4, Date.valueOf(reservation.getCheckout()));
             stat.setBigDecimal(5, reservation.getTotalamount());
@@ -32,27 +32,40 @@ public class ReservationDAOImp implements ReservationDAO{
 
     @Override
     public List<Reservation> findAllReservation(){
+
         List<Reservation> list = new ArrayList<>();
-        String sql = "SELECT  id, guest_id, room_id, check_in, check_out, total_amount"
-                + " FROM reservations ORDER BY id";
-        try{
+
+        String sql =
+                "SELECT id, guest_id, room_id, check_in, check_out, total_amount " +
+                        "FROM reservations ORDER BY id";
+
+        try {
+
             Connection conn = DBConnection.getConnection();
+
             Statement stat = conn.createStatement();
+
             ResultSet rs = stat.executeQuery(sql);
-            while (rs.next()){
+
+            while (rs.next()) {
+
                 Reservation r = new Reservation();
-                r.setId(rs.getInt("id"));
-                r.setGuestid(rs.getInt("guestId"));
-                r.setRoomid(rs.getInt("roomId"));
-                r.setCheckin(rs.getDate("checkin").toLocalDate());
-                r.setCheckout(rs.getDate("checkout").toLocalDate());
-                r.setTotalamount(rs.getBigDecimal("totalamount"));
+
+                r.setId(rs.getLong("id"));
+                r.setGuestid(rs.getInt("guest_id"));
+                r.setRoomid(rs.getInt("room_id"));
+                r.setCheckin(rs.getDate("check_in").toLocalDate());
+                r.setCheckout(rs.getDate("check_out").toLocalDate());
+                r.setTotalamount(rs.getBigDecimal("total_amount"));
 
                 list.add(r);
             }
-        }catch (SQLException ex){
+
+        } catch (SQLException ex) {
+
             throw new RuntimeException(ex);
         }
+
         return list;
     }
 
@@ -71,12 +84,11 @@ public class ReservationDAOImp implements ReservationDAO{
 
             if (rs.next()) {
                 Reservation r = new Reservation();
-                r.setId(rs.getLong("id"));
-                r.setGuestid(rs.getInt("guestid"));
-                r.setRoomid(rs.getInt("roomid"));
-                r.setCheckin(rs.getDate("checkin").toLocalDate());
-                r.setCheckout(rs.getDate("Checkout").toLocalDate());
-                r.setTotalamount(rs.getBigDecimal("totalAmount"));
+                r.setGuestid(rs.getInt("guest_id"));
+                r.setRoomid(rs.getInt("room_id"));
+                r.setCheckin(rs.getDate("check_in").toLocalDate());
+                r.setCheckout(rs.getDate("check_out").toLocalDate());
+                r.setTotalamount(rs.getBigDecimal("total_amount"));
 
                 return r;
             }
@@ -117,7 +129,7 @@ public class ReservationDAOImp implements ReservationDAO{
     @Override
     public void updateReservation(Reservation reservation) {
         String sql = "UPDATE reservations "
-                + "SET  guestid= ?, roomid = ?, checkin = ?, checkout = ?, totalamount = ? "
+                + "SET  guest_id= ?, room_id = ?, check_in = ?, check_out = ?, total_amount = ? "
                 + "WHERE id = ?";
 
         try {
@@ -125,7 +137,7 @@ public class ReservationDAOImp implements ReservationDAO{
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setInt(1, reservation.getGuestid());
-            stat.setInt(2, reservation.getRoomid());
+            stat.setLong(2, reservation.getRoomid());
             stat.setDate(3, Date.valueOf(reservation.getCheckin()) );
             stat.setDate(4, Date.valueOf(reservation.getCheckout()));
             stat.setBigDecimal(5, reservation.getTotalamount() );

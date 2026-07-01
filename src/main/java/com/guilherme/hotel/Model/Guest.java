@@ -8,7 +8,10 @@ public class Guest {
     private String email;
     private String password;
 
+
+
     public Guest() {}
+
 
     public Guest(long id, String name, String cpf, String phone, String email) {
         this.id = id;
@@ -71,4 +74,5 @@ public class Guest {
     public String toString() {
         return id + " - " + name + " - " + cpf;
     }
+
 }

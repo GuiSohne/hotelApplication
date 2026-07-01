@@ -3,20 +3,25 @@ package com.guilherme.hotel.Controller;
 import com.guilherme.hotel.Dao.RoomDAOImp;
 import com.guilherme.hotel.Model.Room;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class FrmRoomCrontroller implements Initializable {
+public class FrmRoomController implements Initializable {
 
     @FXML
     private TextField txtNumero;
 
     @FXML
-    private TextField txtValor;
+    private TextField txtValorDiaria;
 
     @FXML
     private ChoiceBox<String> choiceTipo;
@@ -73,7 +78,7 @@ public class FrmRoomCrontroller implements Initializable {
             );
 
             room.setDaily_rate(
-                    Double.parseDouble(txtValor.getText())
+                    Double.parseDouble(txtValorDiaria.getText())
             );
 
             room.setStatus(
@@ -110,6 +115,8 @@ public class FrmRoomCrontroller implements Initializable {
                             + room.getType()
                             + " | "
                             + room.getStatus()
+                            + " |  $ "
+                            + room.getDaily_rate()
             );
         }
     }
@@ -117,9 +124,71 @@ public class FrmRoomCrontroller implements Initializable {
     private void limparCampos() {
 
         txtNumero.clear();
-        txtValor.clear();
+        txtValorDiaria.clear();
 
         choiceTipo.setValue(null);
         choiceStatus.setValue(null);
+    }
+
+    // ==========================
+    // NAVEGAÇÃO ENTRE TELAS
+    // ==========================
+
+    @FXML
+    private void abrirDashboard(ActionEvent event) throws IOException {
+        abrirTela("/views/frmDashboard.fxml");
+    }
+
+    @FXML
+    private void abrirGuest(ActionEvent event) throws IOException {
+        abrirTela("/views/frmGuests.fxml");
+    }
+
+    @FXML
+    private void abrirReservation(ActionEvent event) throws IOException {
+        abrirTela("/views/frmReservation.fxml");
+    }
+
+    @FXML
+    private void abrirRoom(ActionEvent event) throws IOException {
+        abrirTela("/views/frmRooms.fxml");
+    }
+
+    private void abrirTela(String caminho) throws IOException {
+
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(caminho));
+
+        Scene scene = new Scene(loader.load());
+
+        Stage stage =
+                (Stage) txtNumero.getScene().getWindow();
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void logout(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader =
+                    new FXMLLoader(getClass()
+                            .getResource("/views/frmLogin.fxml"));
+
+            Scene scene = new Scene(loader.load());
+
+            Stage stage =
+                    (Stage) ((Button) event.getSource())
+                            .getScene()
+                            .getWindow();
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

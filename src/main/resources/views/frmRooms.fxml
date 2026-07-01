@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guilherme.hotel.Controller.FrmRoomCrontroller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F3F4F6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guilherme.hotel.Controller.FrmRoomController">
    <children>
       <Pane prefHeight="400.0" prefWidth="154.0" style="-fx-background-color: #1F2937;">
          <children>
@@ -18,27 +18,27 @@
                   <Font name="Cambria" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnDashboard" layoutX="13.0" layoutY="57.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Dashbord">
+            <Button fx:id="btnDashboard" onAction="#abrirDashboard" layoutX="13.0" layoutY="57.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Dashbord">
                <font>
                   <Font name="Cambria" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnUsuario" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Usuários">
+            <Button fx:id="btnUsuario" onAction="#abrirGuest" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Usuários">
                <font>
                   <Font name="Cambria" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnReservas" layoutX="13.0" layoutY="181.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Reservas">
+            <Button fx:id="btnReservas"  onAction="#abrirReservation" layoutX="13.0" layoutY="181.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: white;" text="--Reservas">
                <font>
                   <Font name="Cambria" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnQuartos" layoutX="13.0" layoutY="245.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: #6B7280;" text="--Quartos" textFill="WHITE">
+            <Button fx:id="btnQuartos" onAction="#abrirRoom" layoutX="13.0" layoutY="245.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="127.0" style="-fx-background-radius: 10; -fx-background-color: #6B7280;" text="--Quartos" textFill="WHITE">
                <font>
                   <Font name="Cambria" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnLogOut" layoutY="375.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" style="-fx-background-radius: 10 10 0 0; -fx-background-color: Tomato;" text="Log out">
+            <Button fx:id="btnLogOut" onAction="#logout" layoutY="375.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="154.0" style="-fx-background-radius: 10 10 0 0; -fx-background-color: Tomato;" text="Log out">
                <font>
                   <Font name="Caladea" size="12.0" />
                </font>
