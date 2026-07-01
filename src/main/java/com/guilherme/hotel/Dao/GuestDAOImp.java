@@ -9,6 +9,7 @@ import java.util.List;
 
 
 public class GuestDAOImp implements GuestDAO {
+    //inserir hospede no banco
     @Override
     public void saveGuest(Guest guest) {
         String sql = "INSERT INTO guest "
@@ -29,6 +30,7 @@ public class GuestDAOImp implements GuestDAO {
         }
     }
 
+    //lista os hospedes
     @Override
     public List<Guest> findAllGuest() {
         List<Guest> list = new ArrayList<>();
@@ -55,6 +57,7 @@ public class GuestDAOImp implements GuestDAO {
     }
 
 
+    //pesquisa hospede por cpf
     @Override
     public Guest searchByCPFGuest(String cpf) {
         String sql = "SELECT id, name, cpf, email, phone, password "
@@ -90,6 +93,7 @@ public class GuestDAOImp implements GuestDAO {
 
     }
 
+    //deleta hospede
     @Override
     public void deleteGuest(long id) {
         String sql = "DELETE FROM guest WHERE id = ?";
@@ -113,6 +117,7 @@ public class GuestDAOImp implements GuestDAO {
 
     }
 
+    //atualiza os hospedes
     @Override
     public void updateGuest(Guest guest) {
         String sql = "UPDATE guest "

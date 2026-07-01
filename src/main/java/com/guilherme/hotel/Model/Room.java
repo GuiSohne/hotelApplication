@@ -7,11 +7,7 @@ public class Room {
     private Double daily_rate;
     private String status;
 
-    @Override
-    public String toString() {
-        return "Quarto " + number;
-    }
-
+    //construtores
     public Room(){}
 
     public Room(long id, int number, String type, Double daily_rate, String status) {
@@ -22,6 +18,7 @@ public class Room {
         this.status = status;
     }
 
+    //Getters AND Setters
     public long getId() {
         return id;
     }
@@ -60,6 +57,11 @@ public class Room {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Quarto " + number;
     }
 }
 

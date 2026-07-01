@@ -11,21 +11,23 @@ public class Reservation {
     private LocalDate checkout;
     private BigDecimal totalamount;
 
-    @Override
-    public String toString() {
-        return "Reserva #" + id +
-                " | Hóspede: " + guestid +
-                " | Quarto: " + roomid +
-                " | Check-in: " + checkin +
-                " | Check-out: " + checkout;
-    }
+    //construtores
     public Reservation(){}
 
+    public Reservation(long id, int guestid, int roomid, LocalDate checkin, LocalDate checkout, BigDecimal totalamount ){
+        this.id = id;
+        this.guestid = guestid;
+        this.roomid = roomid;
+        this.checkin = checkin;
+        this.checkout = checkout;
+        this.totalamount = totalamount;
+    }
+
+
+    //Getters AND Setters
     public long getId() {
         return id;
     }
-
-
 
     public void setId(long id) {
         this.id = id;
@@ -71,13 +73,13 @@ public class Reservation {
         this.totalamount = totalamount;
     }
 
-    public Reservation(long id, int guestid, int roomid, LocalDate checkin, LocalDate checkout, BigDecimal totalamount ){
-        this.id = id;
-        this.guestid = guestid;
-        this.roomid = roomid;
-        this.checkin = checkin;
-        this.checkout = checkout;
-        this.totalamount = totalamount;
-    }
 
+    @Override
+    public String toString() {
+        return "Reserva #" + id +
+                " | Hóspede: " + guestid +
+                " | Quarto: " + roomid +
+                " | Check-in: " + checkin +
+                " | Check-out: " + checkout;
+    }
 }

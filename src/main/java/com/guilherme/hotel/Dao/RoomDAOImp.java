@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAOImp implements RoomDAO {
+    //inserir quarto no banco
     @Override
     public void saveRoom(Room room){
         String sql = "INSERT INTO rooms "
                 +"(number, type, daily_rate, status) VALUES"
                 +"(?, ?, ?, ?)";
 
+        //se conecta ao banco e preenche os dados
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -22,12 +24,14 @@ public class RoomDAOImp implements RoomDAO {
             stat.setDouble(3, room.getDaily_rate());
             stat.setString(4, room.getStatus());
 
+            //executa
             stat.executeUpdate();
         }catch(SQLException ex){
             throw new RuntimeException(ex);
         }
     }
 
+    //listar todos os quartos
     @Override
     public List<Room> listRoom(){
         List<Room> list = new ArrayList<>();
@@ -54,6 +58,7 @@ public class RoomDAOImp implements RoomDAO {
         return list;
     }
 
+    //pesquisar quarto por id
     @Override
     public Room searchById(Long id){
         String sql = "Select id, number, type, daily_rate, status "
@@ -84,6 +89,7 @@ public class RoomDAOImp implements RoomDAO {
         }
     }
 
+    //deleta quarto
     @Override
     public void deleteRoom(Long id){
         String sql = "DELETE FROM rooms WHERE id = ?";
@@ -104,6 +110,8 @@ public class RoomDAOImp implements RoomDAO {
         }
     }
 
+
+    //atualiza quarto
     @Override
     public void updateRoom(Room room){
 

@@ -9,11 +9,11 @@ public class Guest {
     private String password;
 
 
-
+    //construtores
     public Guest() {}
 
 
-    public Guest(long id, String name, String cpf, String phone, String email) {
+    public Guest(long id, String name, String cpf, String phone, String email, String password) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
@@ -22,6 +22,8 @@ public class Guest {
         this.password = password;
     }
 
+
+    //Getters AND Setters
     public long getId() {
         return id;
     }

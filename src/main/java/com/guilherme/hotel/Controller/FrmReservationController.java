@@ -104,6 +104,33 @@ public class FrmReservationController {
         );
     }
 
+    @FXML
+    private void fazerCheckOut() {
+
+        Room room = choiceQuarto.getValue();
+
+        if (room == null) {
+            mostrarErro("Selecione um quarto.");
+            return;
+        }
+
+        room = roomDAO.searchById(room.getId());
+
+        if (room.getStatus().equalsIgnoreCase("Available")) {
+            mostrarErro("Este quarto já está livre.");
+            return;
+        }
+
+        room.setStatus("Available");
+        roomDAO.updateRoom(room);
+
+        txtStatus.setText("Available");
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Check-out realizado. Quarto liberado.");
+        alert.showAndWait();
+    }
+
     private void salvarReserva() {
 
         try {
@@ -111,34 +138,29 @@ public class FrmReservationController {
             Room room = choiceQuarto.getValue();
 
             if (room == null) {
-
-                mostrarErro(
-                        "Selecione um quarto."
-                );
-
+                mostrarErro("Selecione um quarto.");
                 return;
             }
 
-            if (!room.getStatus()
-                    .equalsIgnoreCase("Available")) {
+            room = roomDAO.searchById(room.getId()); // garante estado atualizado
 
-                mostrarErro(
-                        "Este quarto está ocupado."
-                );
-
+            if (!room.getStatus().equalsIgnoreCase("Available")) {
+                mostrarErro("Quarto já está ocupado.");
                 return;
             }
 
-            long dias =
-                    ChronoUnit.DAYS.between(
-                            Datapickerentrada.getValue(),
-                            Datapickersaida.getValue()
-                    );
+            long dias = ChronoUnit.DAYS.between(
+                    Datapickerentrada.getValue(),
+                    Datapickersaida.getValue()
+            );
 
-            BigDecimal total =
-                    BigDecimal.valueOf(
-                            dias * room.getDaily_rate()
-                    );
+            if (dias <= 0) {
+                mostrarErro("Datas inválidas!");
+                return;
+            }
+
+            BigDecimal total = BigDecimal.valueOf(dias)
+                    .multiply(BigDecimal.valueOf(room.getDaily_rate()));
 
             Reservation reservation =
                     new Reservation();

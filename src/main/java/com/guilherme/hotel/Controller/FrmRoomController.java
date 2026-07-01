@@ -58,12 +58,12 @@ public class FrmRoomController implements Initializable {
                 )
         );
 
-        btnAdd.setOnAction(event -> adicionarQuarto());
+        btnAdd.setOnAction(event -> addRoom());
 
-        btnListar.setOnAction(event -> listarQuartos());
+        btnListar.setOnAction(event -> listRooms());
     }
 
-    private void adicionarQuarto() {
+    private void addRoom() {
 
         try {
 
@@ -87,11 +87,11 @@ public class FrmRoomController implements Initializable {
 
             roomDAO.saveRoom(room);
 
-            limparCampos();
+            ClearFields();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
-            alert.setContentText("Quarto cadastrado!");
+            alert.setContentText("Room registered!");
             alert.showAndWait();
 
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class FrmRoomController implements Initializable {
         }
     }
 
-    private void listarQuartos() {
+    private void listRooms() {
 
         listViewQuartos.getItems().clear();
 
@@ -121,7 +121,7 @@ public class FrmRoomController implements Initializable {
         }
     }
 
-    private void limparCampos() {
+    private void ClearFields() {
 
         txtNumero.clear();
         txtValorDiaria.clear();
@@ -130,9 +130,7 @@ public class FrmRoomController implements Initializable {
         choiceStatus.setValue(null);
     }
 
-    // ==========================
-    // NAVEGAÇÃO ENTRE TELAS
-    // ==========================
+    //navegar entre telas
 
     @FXML
     private void abrirDashboard(ActionEvent event) throws IOException {

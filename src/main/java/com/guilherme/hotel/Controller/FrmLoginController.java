@@ -28,7 +28,11 @@ public class FrmLoginController {
         String senha = passFieldSenha.getText();
 
         if (cpf.isEmpty() || senha.isEmpty()) {
-            mostrarErro("CPF e senha são obrigatórios.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("You need to put the CPF and Password");
+            alert.showAndWait();
             return;
         }
 
@@ -44,11 +48,19 @@ public class FrmLoginController {
                 abrirDashboard();
 
             } else {
-                mostrarErro("CPF ou senha inválidos.");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText(null);
+                alert.setContentText("CPF or Password is incorrect");
+                alert.showAndWait();
             }
 
         } catch (Exception ex) {
-            mostrarErro("CPF ou senha inválidos.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("CPF or Password is incorrect");
+            alert.showAndWait();
         }
     }
 
@@ -76,11 +88,4 @@ public class FrmLoginController {
         stage.show();
     }
 
-    private void mostrarErro(String mensagem) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
-    }
 }

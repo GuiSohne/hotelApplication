@@ -64,7 +64,7 @@
             <Label layoutX="193.0" layoutY="51.0" text="Check-out" textFill="WHITE" />
             <Label layoutX="151.0" layoutY="163.0" text="Valor Diária" textFill="WHITE" />
             <Button fx:id="btnentrada" layoutX="19.0" layoutY="311.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Check-in" />
-            <Button fx:id="btnSaida" layoutX="245.0" layoutY="311.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Check-out" />
+            <Button fx:id="btnSaida" onAction="#fazerCheckOut" layoutX="245.0" layoutY="311.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Check-out" />
             <Label layoutX="19.0" layoutY="111.0" text="Tipo do quarto" textFill="WHITE" />
             <Label layoutX="193.0" layoutY="111.0" text="Está livre?" textFill="WHITE" />
             <TextField fx:id="txtFieldValorDiaria" alignment="CENTER" layoutX="108.0" layoutY="180.0" />

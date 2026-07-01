@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAOImp implements ReservationDAO{
+    //inserir reserva no banco
     @Override
     public void saveReservation(Reservation reservation){
         String sql = "INSERT INTO reservations "
@@ -30,6 +31,7 @@ public class ReservationDAOImp implements ReservationDAO{
         }
     }
 
+    //listar reservas
     @Override
     public List<Reservation> findAllReservation(){
 
@@ -69,6 +71,7 @@ public class ReservationDAOImp implements ReservationDAO{
         return list;
     }
 
+    //pesquisar reserva por id
     @Override
     public Reservation SearchByIdReservation(Long id) {
         String sql = "SELECT id, guest_id, room_id, check_in, check_out, total_amount "
@@ -103,6 +106,7 @@ public class ReservationDAOImp implements ReservationDAO{
     }
 
 
+    //deletar reserva
     @Override
     public void deleteReservation(Long id) {
         String sql = "DELETE FROM reservations WHERE id = ?";
@@ -126,6 +130,7 @@ public class ReservationDAOImp implements ReservationDAO{
 
     }
 
+    //atualizar reserva
     @Override
     public void updateReservation(Reservation reservation) {
         String sql = "UPDATE reservations "

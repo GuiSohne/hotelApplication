@@ -56,47 +56,45 @@ public class FrmDashboardController {
                 )
         );
 
-        int ocupados = 0;
-        int livres = 0;
+        int occupied = 0;
+        int availible = 0;
 
-        int simples = 0;
-        int duplo = 0;
-        int luxo = 0;
+        int simple = 0;
+        int doubles = 0;
+        int luxury = 0;
 
         for (Room room : roomDAO.listRoom()) {
 
-            if (room.getStatus().equalsIgnoreCase("Occupied")) {
-                ocupados++;
+            if ("Occupied".equalsIgnoreCase(room.getStatus())) {
+                occupied++;
             }
 
-            if (room.getStatus().equalsIgnoreCase("Available")) {
-                livres++;
+            if ("Available".equalsIgnoreCase(room.getStatus()))  {
+                availible++;
             }
 
             if (room.getType().equalsIgnoreCase("Single")) {
-                simples++;
+                simple++;
             }
 
             if (room.getType().equalsIgnoreCase("Double")) {
-                duplo++;
+                doubles++;
             }
 
             if (room.getType().equalsIgnoreCase("Luxury")) {
-                luxo++;
+                luxury++;
             }
         }
 
-        lblQuartoOcupado.setText(String.valueOf(ocupados));
-        lblQuartoLivre.setText(String.valueOf(livres));
+        lblQuartoOcupado.setText(String.valueOf(occupied));
+        lblQuartoLivre.setText(String.valueOf(availible));
 
-        lblQuartoSimples.setText(String.valueOf(simples));
-        lblQuartoDuplo.setText(String.valueOf(duplo));
-        lblQuartoLuxo.setText(String.valueOf(luxo));
+        lblQuartoSimples.setText(String.valueOf(simple));
+        lblQuartoDuplo.setText(String.valueOf(doubles));
+        lblQuartoLuxo.setText(String.valueOf(luxury));
     }
 
-    // ==========================
-    // NAVEGAÇÃO ENTRE TELAS
-    // ==========================
+  //navegar entre telas
 
     @FXML
     private void abrirDashboard(ActionEvent event) throws IOException {
