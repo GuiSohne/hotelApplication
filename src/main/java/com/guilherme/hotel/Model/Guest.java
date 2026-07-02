@@ -9,7 +9,7 @@ public class Guest {
     private String password;
 
 
-    //construtores
+    //Construtores
     public Guest() {}
 
 
@@ -72,6 +72,7 @@ public class Guest {
         this.password = password;
     }
 
+    //Como o objeto irá aparecer
     @Override
     public String toString() {
         return id + " - " + name + " - " + cpf;

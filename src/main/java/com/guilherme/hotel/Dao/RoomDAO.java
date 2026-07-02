@@ -6,19 +6,19 @@ import java.util.List;
 
 
 public interface RoomDAO {
-    //salvar quarto
+    //Salvar quarto
     void saveRoom(Room room);
 
-    //listar quartos
+    //Listar quartos
     List<Room> listRoom();
 
-    //pesquisar quarto por id
+    //Pesquisar quarto por id
     Room searchById(Long id);
 
-    //deletar quarto
+    //Deletar quarto
     void deleteRoom(int number);
 
-    //atualizar quarto
+    //Atualizar quarto
     void updateRoom(Room room);
 
 }

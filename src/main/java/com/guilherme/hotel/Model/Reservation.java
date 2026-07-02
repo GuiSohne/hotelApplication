@@ -75,9 +75,7 @@ public class Reservation {
     }
 
 
-
-
-
+    //Como o objeto sera convertido em texto
     @Override
     public String toString() {
         return "Reserva #" + id +

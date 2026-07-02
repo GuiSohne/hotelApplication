@@ -7,7 +7,7 @@ public class Room {
     private Double daily_rate;
     private String status;
 
-    //construtores
+    //Construtores
     public Room(){}
 
     public Room(long id, int number, String type, Double daily_rate, String status) {
@@ -59,6 +59,7 @@ public class Room {
         this.status = status;
     }
 
+    //Como o objeto irá aparecer
     @Override
     public String toString() {
         return "Quarto " + number;

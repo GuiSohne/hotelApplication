@@ -9,18 +9,20 @@ import java.util.List;
 public class RoomService {
     private RoomDAO dao = new RoomDAOImp();
 
+    //Salvar quarto
     public void save(Room room){
-        //nome quarto colocado
-        if(room.getNumber() == 0){
-            throw new IllegalArgumentException("name preenchido");
+        //Verifica se o número do quarto foi colocado
+        if(room.getNumber() <= 0 ){
+            throw new IllegalArgumentException("You need to enter the number.");
         }
-        //preço
+        //Verifica se o preço do quarto foi colocado
         if(room.getDaily_rate() <= 0){
-            throw new IllegalArgumentException("preco preenchido");
+            throw new IllegalArgumentException("You need to enter the price.");
         }
         dao.saveRoom(room);
     }
 
+    //Listar quartos
     public List<Room> list(){
         return dao.listRoom();
     }

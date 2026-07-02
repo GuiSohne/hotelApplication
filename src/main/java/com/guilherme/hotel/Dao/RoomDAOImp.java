@@ -8,14 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAOImp implements RoomDAO {
-    //inserir quarto no banco
+    //Inserir quarto no banco
     @Override
     public void saveRoom(Room room){
+
+        //Query SQL para salvar quarto
         String sql = "INSERT INTO rooms "
                 +"(number, type, daily_rate) VALUES"
                 +"(?, ?, ?)";
 
-        //se conecta ao banco e preenche os dados
+        // Abre conexão com o banco e prepara para salvar
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -24,20 +26,25 @@ public class RoomDAOImp implements RoomDAO {
             stat.setDouble(3, room.getDaily_rate());
 
 
-            //executa
+            //Executa
             stat.executeUpdate();
+
+            //Exceção caso  houver erro na atualização no banco
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while saving room");
         }
     }
 
-    //listar todos os quartos
+    //Listar todos os quartos
     @Override
     public List<Room> listRoom(){
+
+        //Query SQL para listar e a criação de uma lista
         List<Room> list = new ArrayList<>();
         String sql = "SELECT id, number, type, daily_rate, status "
                 + "FROM rooms ORDER BY number";
 
+        // Abre conexão com o banco e prepara a listagem
         try{
             Connection conn = DBConnection.getConnection();
             Statement stat = conn.createStatement();
@@ -52,18 +59,22 @@ public class RoomDAOImp implements RoomDAO {
                 r.setStatus(rs.getString("status"));
                 list.add(r);
             }
+
+            //Exceção caso  houver erro na atualização no banco
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while listing room");
         }
         return list;
     }
 
-    //pesquisar quarto por id
+    //Pesquisar quarto por id
     @Override
     public Room searchById(Long id){
+        //Query SQL para pesquisar pelo id
         String sql = "Select id, number, type, daily_rate, status "
                 +"FROM rooms WHERE id = ?";
 
+        //Abre conexão com o banco e prepara para pesquisar
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -82,46 +93,53 @@ public class RoomDAOImp implements RoomDAO {
 
                 return r;
             }
+
+            //Caso não encontrar nenhum quarto com o respectivo ID
             throw new RuntimeException(
                     "No room found with the ID: " + id);
+
+            //Exceção caso  houver erro na atualização no banco
         }catch (SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while searching room");
         }
     }
 
-    //deleta quarto
+    //Deleta o quarto
     @Override
     public void deleteRoom(int number){
+        //Query SQL para deletar pelo id
         String sql = "DELETE FROM rooms WHERE number = ?";
 
+        // Abre conexão com o banco e prepara para deletar
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setInt(1,  number);
 
+            //criação de variável, caso nenhum linha for modificada, não houve a exclusão do quarto
             int rows = stat.executeUpdate();
-
             if(rows == 0){
-                throw new RuntimeException( "No rooms found with the id: "+ number);
+                throw new RuntimeException( "No rooms found with the number: "+ number);
             }
+
+            //Exceção caso  houver erro na atualização no banco
         }catch (SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while deleting room");
         }
     }
 
 
-    //atualiza quarto
+    //Atualiza os dados do quarto
     @Override
     public void updateRoom(Room room){
 
-        System.out.println("ID recebido: " + room.getId());
-        System.out.println("Status recebido: " + room.getStatus());
-
+        //Query SQL para atualizar pelo id
         String sql = "UPDATE rooms "
                 +"SET  type = ?, daily_rate = ?, status = ? "
                 +"WHERE id = ?";
 
+         // Abre conexão com o banco e prepara a atualização
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -131,13 +149,9 @@ public class RoomDAOImp implements RoomDAO {
             stat.setString(3, room.getStatus());
             stat.setLong(4, room.getId()   );
 
-
-            int rows = stat.executeUpdate();
-
-            System.out.println("Linhas afetadas: " + rows);
-
+            //Exceção caso  houver erro na atualização no banco
         }catch(SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while updating room");
         }
     }
 

@@ -13,7 +13,9 @@ public class GuestService {
         this.dao = new GuestDAOImp();
     }
 
+    //Salvar hospedes
     public void save(Guest guest){
+        //verifica senha, cpf e nome se estão preenchidos e depois salva
         if (guest.getName() == null || guest.getName().isBlank()){
             throw new RuntimeException("Name is required.");
         }
@@ -28,10 +30,12 @@ public class GuestService {
         dao.saveGuest(guest);
     }
 
+    //Listar todos os hospedes
     public List<Guest> findAll(){
         return dao.findAllGuest();
     }
 
+    //Listar hospede por cpf
     public Guest searchByCPF(String cpf){
         if(cpf == null || cpf.isBlank()){
             throw new RuntimeException("To search, you need a CPF.");
@@ -39,11 +43,14 @@ public class GuestService {
         return dao.searchByCPFGuest(cpf);
     }
 
+    //Atualizar hospedes
     public void update(Guest guest){
         dao.updateGuest(guest);
     }
 
+    //Deletar hospedes
     public void delete(long id){
+        //verifica se o id é usado
         if(id <= 0 ){
             throw new RuntimeException("This id is null");
         }

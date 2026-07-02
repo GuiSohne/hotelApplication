@@ -17,26 +17,30 @@ public class ReservationService {
     private RoomDAO roomDAO = new RoomDAOImp();
     private Room room = new Room();
 
+    //Realizar checkin
     public void checkin(Reservation reservation){
-
+        //Verifica se o hospede foi selecionado e após se um quarto foi selecionado
         if(reservation.getGuestid() == 0){
-            throw new IllegalArgumentException("Selecione um hóspede.");
+            throw new IllegalArgumentException("Select a guest.");
         }
 
         if(reservation.getRoomid() == 0){
-            throw new IllegalArgumentException("Selecione um quarto.");
+            throw new IllegalArgumentException("Select a room.");
         }
 
+        //Após pegar o quarto pesquisa
         Room room = roomDAO.searchById(reservation.getRoomid());
 
+        //Verifica se o quarto existe, e depois se está ocupado
         if(room == null){
-            throw new IllegalArgumentException("Quarto não encontrado.");
+            throw new IllegalArgumentException("The room was not found.");
         }
 
         if("Occupied".equalsIgnoreCase(room.getStatus())){
-            throw new IllegalArgumentException("Este quarto já está ocupado.");
+            throw new IllegalArgumentException("This room is already occupied..");
         }
 
+        //Calcula valor total
         long dias = ChronoUnit.DAYS.between(
                 reservation.getCheckin(),
                 reservation.getCheckout()
@@ -47,20 +51,23 @@ public class ReservationService {
 
         reservation.setTotalamount(total);
 
+        //Coloca o quarto como ocupado e atualiza o mesmo
         room.setStatus("Occupied");
         roomDAO.updateRoom(room);
 
         reservationDAO.saveReservation(reservation);
 
     }
-
+    //Realizar checkout
     public void checkOut(long roomId){
+        //pesquisa o quarto e após tira a ocupação.
         Room room = roomDAO.searchById(roomId);
 
         room.setStatus("Available");
         roomDAO.updateRoom(room);
     }
 
+    //Listar reservas
     public List<Reservation> list(){
         return reservationDAO.findAllReservation();
     }

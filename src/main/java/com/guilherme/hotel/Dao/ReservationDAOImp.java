@@ -9,13 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAOImp implements ReservationDAO{
-    //inserir reserva no banco
+    //Inserir reserva no banco
     @Override
     public void saveReservation(Reservation reservation){
+
+        //Query SQL para salvar reserva
         String sql = "INSERT INTO reservations "
                 +"(guest_id, room_id, check_in, check_out, total_amount) "
                 +"VALUES (?, ?, ?, ?, ?)";
 
+        // Abre conexão com o banco e prepara para salvar
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -25,22 +28,26 @@ public class ReservationDAOImp implements ReservationDAO{
             stat.setDate(4, Date.valueOf(reservation.getCheckout()));
             stat.setBigDecimal(5, reservation.getTotalamount());
 
+            //Executa
             stat.executeUpdate();
+
+            //Exceção caso  houver erro na atualização no banco
         } catch (SQLException ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while saving room");
         }
     }
 
-    //listar reservas
+    //Listar reservas
     @Override
     public List<Reservation> findAllReservation(){
 
+        //Query SQL para listar e a criação de  uma lista
         List<Reservation> list = new ArrayList<>();
-
         String sql =
                 "SELECT id, guest_id, room_id, check_in, check_out, total_amount " +
                         "FROM reservations ORDER BY id";
 
+        // Abre conexão com o banco e prepara a listagem
         try {
 
             Connection conn = DBConnection.getConnection();
@@ -63,20 +70,23 @@ public class ReservationDAOImp implements ReservationDAO{
                 list.add(r);
             }
 
+            //Exceção caso  houver erro na atualização no banco
         } catch (SQLException ex) {
-
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while listing room");
         }
 
         return list;
     }
 
-    //pesquisar reserva por id
+    //Pesquisar reserva por id
     @Override
     public Reservation SearchByIdReservation(Long id) {
+
+        //Query SQL para pesquisar pelo id
         String sql = "SELECT id, guest_id, room_id, check_in, check_out, total_amount "
                 + "FROM reservations WHERE id = ?";
 
+        //Abre conexão com o banco e prepara para pesquisar
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -96,47 +106,55 @@ public class ReservationDAOImp implements ReservationDAO{
                 return r;
             }
 
+            //Caso não encontrar nenhuma reserva com o respectivo ID
             throw new RuntimeException(
                     "No Reservations found with the ID: " + id
             );
 
+            //Exceção caso  houver erro na atualização no banco
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while deleting room");
         }
     }
 
 
-    //deletar reserva
+    //Deletar reserva
     @Override
     public void deleteReservation(Long id) {
         String sql = "DELETE FROM reservations WHERE id = ?";
 
+        // Abre conexão com o banco e prepara para deletar
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setLong(1, id);
 
+            //criação de variável, caso nenhum linha for modificada, não houve a exclusão da reserva
             int rows = stat.executeUpdate();
-
             if (rows == 0){
                 throw new RuntimeException(
                         "No Reservations found with the Number: " + id
                 );
             }
+
+            //Exceção caso  houver erro na atualização no banco
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while deleting room");
         }
 
     }
 
-    //atualizar reserva
+    //Atualizar reserva
     @Override
     public void updateReservation(Reservation reservation) {
+
+        //Query SQL para atualizar
         String sql = "UPDATE reservations "
                 + "SET  guest_id= ?, room_id = ?, check_in = ?, check_out = ?, total_amount = ? "
                 + "WHERE id = ?";
 
+        // Abre conexão com o banco e prepara para atualizar
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
@@ -148,8 +166,8 @@ public class ReservationDAOImp implements ReservationDAO{
             stat.setBigDecimal(5, reservation.getTotalamount() );
             stat.setLong(6, reservation.getId());
 
+            //criação de variável, caso nenhum linha for modificada, não houve a atualização da reserva
             int rows = stat.executeUpdate();
-
             if (rows == 0) {
                 throw new RuntimeException(
                         "No Reservetation found with the ID:  "
@@ -157,14 +175,10 @@ public class ReservationDAOImp implements ReservationDAO{
                 );
             }
 
+            //Exceção caso  houver erro na atualização no banco
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Database error while deleting room");
         }
 
     }
     }
-
-
-
-
-
