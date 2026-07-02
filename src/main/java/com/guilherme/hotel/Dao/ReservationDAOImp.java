@@ -121,7 +121,7 @@ public class ReservationDAOImp implements ReservationDAO{
 
             if (rows == 0){
                 throw new RuntimeException(
-                        "No Reservations found with the ID: " + id
+                        "No Reservations found with the Number: " + id
                 );
             }
         } catch (SQLException ex) {

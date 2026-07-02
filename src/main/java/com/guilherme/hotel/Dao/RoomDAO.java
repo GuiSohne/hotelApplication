@@ -16,7 +16,7 @@ public interface RoomDAO {
     Room searchById(Long id);
 
     //deletar quarto
-    void deleteRoom(Long id);
+    void deleteRoom(int number);
 
     //atualizar quarto
     void updateRoom(Room room);

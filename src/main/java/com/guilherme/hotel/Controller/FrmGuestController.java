@@ -38,7 +38,7 @@ public class FrmGuestController {
     @FXML
     public void initialize() {
 
-        carregarLista();
+
 
         listViewGuests.getSelectionModel()
                 .selectedItemProperty()

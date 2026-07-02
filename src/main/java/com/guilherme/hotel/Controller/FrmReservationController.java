@@ -6,6 +6,7 @@ import com.guilherme.hotel.Dao.RoomDAOImp;
 import com.guilherme.hotel.Model.Guest;
 import com.guilherme.hotel.Model.Reservation;
 import com.guilherme.hotel.Model.Room;
+import com.guilherme.hotel.Service.ReservationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,7 +45,25 @@ public class FrmReservationController {
     private TextField txtStatus;
 
     @FXML
+    private ReservationService reservationService = new ReservationService();
+
+    @FXML
     private ListView<Reservation> listViewReservas;
+
+    @FXML
+    private Label lblTotal;
+
+    @FXML
+    public void listarReservas(){
+
+        listViewReservas.getItems().clear();
+
+        listViewReservas.getItems().addAll(
+                reservationService.list()
+        );
+
+    }
+
 
     private final ReservationDAOImp reservationDAO =
             new ReservationDAOImp();
@@ -63,8 +82,7 @@ public class FrmReservationController {
     @FXML
     public void initialize() {
 
-        // Carrega os quartos
-        carregarQuartos();
+
 
         // Atualiza informações ao selecionar quarto
         choiceQuarto.getSelectionModel()
@@ -95,7 +113,7 @@ public class FrmReservationController {
                 guestDAO.findAllGuest()
         );
 
-        carregarReservas();
+
 
 
 
@@ -131,102 +149,54 @@ public class FrmReservationController {
         alert.showAndWait();
     }
 
-    private void salvarReserva() {
+    private void salvarReserva() {try {
 
-        try {
+        Room room = choiceQuarto.getValue();
 
-            Room room = choiceQuarto.getValue();
-
-            if (room == null) {
-                mostrarErro("Selecione um quarto.");
-                return;
-            }
-
-            room = roomDAO.searchById(room.getId()); // garante estado atualizado
-
-            if (!room.getStatus().equalsIgnoreCase("Available")) {
-                mostrarErro("Quarto já está ocupado.");
-                return;
-            }
-
-            long dias = ChronoUnit.DAYS.between(
-                    Datapickerentrada.getValue(),
-                    Datapickersaida.getValue()
-            );
-
-            if (dias <= 0) {
-                mostrarErro("Datas inválidas!");
-                return;
-            }
-
-            BigDecimal total = BigDecimal.valueOf(dias)
-                    .multiply(BigDecimal.valueOf(room.getDaily_rate()));
-
-            Reservation reservation =
-                    new Reservation();
-
-            Guest guest = choiceGuest.getValue();
-
-            if (guest == null) {
-                mostrarErro("Selecione um usuário.");
-                return;
-            }
-
-            reservation.setGuestid(
-                    (int) guest.getId()
-            );
-
-            reservation.setRoomid(
-                    room.getId()
-            );
-
-            reservation.setCheckin(
-                    Datapickerentrada.getValue()
-            );
-
-            reservation.setCheckout(
-                    Datapickersaida.getValue()
-            );
-
-            reservation.setTotalamount(
-                    total
-            );
-
-            reservationDAO.saveReservation(
-                    reservation
-            );
-
-            // Atualiza status do quarto
-            room.setStatus("Occupied");
-
-            roomDAO.updateRoom(room);
-
-            carregarQuartos();     // recarrega os quartos do banco
-            carregarReservas();    // recarrega as reservas
-
-            txtStatus.setText(
-                    room.getStatus()
-            );
-
-            Alert alert =
-                    new Alert(
-                            Alert.AlertType.INFORMATION
-                    );
-
-            alert.setHeaderText(null);
-
-            alert.setContentText(
-                    "Reserva cadastrada com sucesso!"
-            );
-
-            alert.showAndWait();
-
-        } catch (Exception ex) {
-
-            mostrarErro(
-                    ex.getMessage()
-            );
+        if (room == null) {
+            mostrarErro("Selecione um quarto.");
+            return;
         }
+
+        Guest guest = choiceGuest.getValue();
+
+        if (guest == null) {
+            mostrarErro("Selecione um hóspede.");
+            return;
+        }
+
+        Reservation reservation = new Reservation();
+
+        reservation.setGuestid((int) guest.getId());
+        reservation.setRoomid(room.getId());
+        reservation.setCheckin(Datapickerentrada.getValue());
+        reservation.setCheckout(Datapickersaida.getValue());
+
+        // O Service faz toda a regra de negócio
+        reservationService.checkin(reservation);
+
+        // Atualiza o valor total na tela
+        lblTotal.setText("R$ " + reservation.getTotalamount());
+
+        // Recarrega os dados
+        carregarQuartos();
+        carregarReservas();
+
+        // Atualiza o status do quarto na tela
+        Room roomAtualizado = roomDAO.searchById(room.getId());
+        txtStatus.setText(roomAtualizado.getStatus());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText("Reserva cadastrada com sucesso!");
+        alert.showAndWait();
+
+    } catch (Exception ex) {
+
+        mostrarErro(ex.getMessage());
+
+    }
+
     }
 
     private void carregarReservas() {

@@ -11,6 +11,7 @@ public class Reservation {
     private LocalDate checkout;
     private BigDecimal totalamount;
 
+
     //construtores
     public Reservation(){}
 
@@ -72,6 +73,9 @@ public class Reservation {
     public void setTotalamount(BigDecimal totalamount) {
         this.totalamount = totalamount;
     }
+
+
+
 
 
     @Override

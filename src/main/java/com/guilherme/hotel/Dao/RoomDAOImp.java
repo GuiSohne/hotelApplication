@@ -12,8 +12,8 @@ public class RoomDAOImp implements RoomDAO {
     @Override
     public void saveRoom(Room room){
         String sql = "INSERT INTO rooms "
-                +"(number, type, daily_rate, status) VALUES"
-                +"(?, ?, ?, ?)";
+                +"(number, type, daily_rate) VALUES"
+                +"(?, ?, ?)";
 
         //se conecta ao banco e preenche os dados
         try{
@@ -22,7 +22,7 @@ public class RoomDAOImp implements RoomDAO {
             stat.setInt(1, room.getNumber());
             stat.setString(2, room.getType());
             stat.setDouble(3, room.getDaily_rate());
-            stat.setString(4, room.getStatus());
+
 
             //executa
             stat.executeUpdate();
@@ -91,19 +91,19 @@ public class RoomDAOImp implements RoomDAO {
 
     //deleta quarto
     @Override
-    public void deleteRoom(Long id){
-        String sql = "DELETE FROM rooms WHERE id = ?";
+    public void deleteRoom(int number){
+        String sql = "DELETE FROM rooms WHERE number = ?";
 
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
 
-            stat.setLong(1,  id);
+            stat.setInt(1,  number);
 
             int rows = stat.executeUpdate();
 
             if(rows == 0){
-                throw new RuntimeException( "No rooms found with the id: "+ id);
+                throw new RuntimeException( "No rooms found with the id: "+ number);
             }
         }catch (SQLException ex){
             throw new RuntimeException(ex);
@@ -119,18 +119,18 @@ public class RoomDAOImp implements RoomDAO {
         System.out.println("Status recebido: " + room.getStatus());
 
         String sql = "UPDATE rooms "
-                +"SET number = ?, type = ?, daily_rate = ?, status = ? "
+                +"SET  type = ?, daily_rate = ?, status = ? "
                 +"WHERE id = ?";
 
         try{
             Connection conn = DBConnection.getConnection();
             PreparedStatement stat = conn.prepareStatement(sql);
 
-            stat.setInt(1, room.getNumber());
-            stat.setString(2, room.getType());
-            stat.setDouble(3, room.getDaily_rate());
-            stat.setString(4, room.getStatus());
-            stat.setLong(5, room.getId());
+            stat.setString(1, room.getType());
+            stat.setDouble(2, room.getDaily_rate());
+            stat.setString(3, room.getStatus());
+            stat.setLong(4, room.getId()   );
+
 
             int rows = stat.executeUpdate();
 

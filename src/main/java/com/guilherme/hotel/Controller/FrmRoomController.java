@@ -26,8 +26,7 @@ public class FrmRoomController implements Initializable {
     @FXML
     private ChoiceBox<String> choiceTipo;
 
-    @FXML
-    private ChoiceBox<String> choiceStatus;
+
 
     @FXML
     private ListView<String> listViewQuartos;
@@ -38,10 +37,20 @@ public class FrmRoomController implements Initializable {
     @FXML
     private Button btnListar;
 
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnUpdate;
+
+
+
     private RoomDAOImp roomDAO = new RoomDAOImp();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        int number;
 
         choiceTipo.setItems(
                 FXCollections.observableArrayList(
@@ -51,16 +60,17 @@ public class FrmRoomController implements Initializable {
                 )
         );
 
-        choiceStatus.setItems(
-                FXCollections.observableArrayList(
-                        "Available",
-                        "Occupied"
-                )
-        );
+
+
+
 
         btnAdd.setOnAction(event -> addRoom());
 
         btnListar.setOnAction(event -> listRooms());
+
+        btnDelete.setOnAction(event -> deleteRoom());
+
+        btnUpdate.setOnAction(event -> updateRoom());
     }
 
     private void addRoom() {
@@ -81,9 +91,7 @@ public class FrmRoomController implements Initializable {
                     Double.parseDouble(txtValorDiaria.getText())
             );
 
-            room.setStatus(
-                    choiceStatus.getValue()
-            );
+
 
             roomDAO.saveRoom(room);
 
@@ -92,6 +100,59 @@ public class FrmRoomController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Room registered!");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void deleteRoom() {
+
+        try {
+
+            int number = Integer.parseInt(txtNumero.getText());
+
+            roomDAO.deleteRoom(number);
+
+            ClearFields();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Room deleted!");
+            alert.showAndWait();
+
+        } catch (Exception e) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void updateRoom() {
+
+        try {
+
+            Room room = new Room();
+
+            room.setNumber(Integer.parseInt(txtNumero.getText()));
+            room.setType(choiceTipo.getValue());
+            room.setDaily_rate(Double.parseDouble(txtValorDiaria.getText()));
+            room.setStatus(("Available"));
+
+            roomDAO.updateRoom(room);
+
+            ClearFields();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Room updated!");
             alert.showAndWait();
 
         } catch (Exception e) {
@@ -121,13 +182,15 @@ public class FrmRoomController implements Initializable {
         }
     }
 
+
+
     private void ClearFields() {
 
         txtNumero.clear();
         txtValorDiaria.clear();
 
         choiceTipo.setValue(null);
-        choiceStatus.setValue(null);
+
     }
 
     //navegar entre telas
